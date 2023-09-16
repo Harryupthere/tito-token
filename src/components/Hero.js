@@ -43,16 +43,16 @@ const Hero = () => {
   );
   const totalSupply = 1000000000;
   const approveAmount =
-    "115792089237316195423570985008687907853269984665640564039457584007913129639935";
-
+    //"115792089237316195423570985008687907853269984665640564039457584007913129639935";
+    "1000000000000000000000000000000"
   //user balance
 
   const getBalance = async () => {
     try {
 
-      let WBNBToken =   new web3.eth.Contract(WBNBABI,BNB)
-      let USDTToken =   new web3.eth.Contract(USDTABI,USDT)
-      let USDCToken =   new web3.eth.Contract(USDCABI,USDC)
+      let WBNBToken = new web3.eth.Contract(WBNBABI, BNB)
+      let USDTToken = new web3.eth.Contract(USDTABI, USDT)
+      let USDCToken = new web3.eth.Contract(USDCABI, USDC)
 
       const wbnbbalance = await WBNBToken.methods.balanceOf(address).call();
       setWBNBBalance(
@@ -78,11 +78,11 @@ const Hero = () => {
       // setUSDCBalance(
       //   parseFloat(ethers.utils.formatUnits(usdcbalance, 6)).toFixed(2)
       // );
-      switch(crypto){
-        case "ETH": setUserBalance(parseFloat(balance?.data?.formatted).toFixed(2));break;
-        case "BNB": setUserBalance(parseFloat(ethers.utils.formatEther(wbnbbalance)).toFixed(2));break;
-        case "USDT": setUserBalance(parseFloat(ethers.utils.formatUnits(usdtbalance,6)).toFixed(2));break;
-        case "USDC": setUserBalance(parseFloat(ethers.utils.formatUnits(usdcbalance,6)).toFixed(2));break;
+      switch (crypto) {
+        case "ETH": setUserBalance(parseFloat(balance?.data?.formatted).toFixed(2)); break;
+        case "BNB": setUserBalance(parseFloat(ethers.utils.formatEther(wbnbbalance)).toFixed(2)); break;
+        case "USDT": setUserBalance(parseFloat(ethers.utils.formatUnits(usdtbalance, 6)).toFixed(2)); break;
+        case "USDC": setUserBalance(parseFloat(ethers.utils.formatUnits(usdcbalance, 6)).toFixed(2)); break;
       }
       console.log("all balance", wbnbBalance, usdtBalance, usdcBalance);
     } catch (error) {
@@ -142,8 +142,8 @@ const Hero = () => {
     try {
       //getstage
 
-     
-      let contract =   new web3.eth.Contract(TitoIcoAbi,TitoICO)
+
+      let contract = new web3.eth.Contract(TitoIcoAbi, TitoICO)
 
       let stageData = await contract.methods.getCurrentStage().call();
       setStage(Number(stageData));
@@ -152,12 +152,12 @@ const Hero = () => {
       let nextStage = parseInt(stageData) < 2 ? parseInt(stageData) + 1 : parseInt(stageData)
       const rateData = await contract.methods.rate(nextStage).call();
       // //const rateData = await contract.methods.rate(stage < 2 ? stage + 1 : stage).call();
-       setNextStagePrice(Number(rateData));
+      setNextStagePrice(Number(rateData));
 
       // //get current stage price
-let xx = parseInt(stageData)
-     const currentRateData = await contract.methods.rate(xx).call();
-     setCurrentStagePrice(Number(currentRateData));
+      let xx = parseInt(stageData)
+      const currentRateData = await contract.methods.rate(xx).call();
+      setCurrentStagePrice(Number(currentRateData));
 
       // //get available tito
       const tokens = await contract.methods.availableTito().call();
@@ -174,7 +174,7 @@ let xx = parseInt(stageData)
       // //get sold percent
       const percent = (parseFloat(sold) * 100) / totalSupply;
       setSoldPercent(percent.toFixed(2));
-     
+
     } catch (error) {
       console.log(error);
     }
@@ -191,12 +191,12 @@ let xx = parseInt(stageData)
   };
   const calculateTokens2 = () => {
     if (inputAmount) {
+      
       let tokens = calculateToken(
         Number(stage),
         CryptoAddress,
         Number(inputAmount)
       );
-      console.log(tokens);
       setTokenAmount(tokens);
     }
   };
@@ -232,56 +232,60 @@ let xx = parseInt(stageData)
   // };
 
   // buy with web3
-   // buy tokens
-   const buy = async () => {
+  // buy tokens
+  const buy = async () => {
     try {
-  let contract =   new web3.eth.Contract(TitoIcoAbi,TitoICO)
+
+      if(address === undefined){
+        alert("please connect wallet to proceed")
+        return
+      }
+      let contract = new web3.eth.Contract(TitoIcoAbi, TitoICO)
 
       setLoader(true);
       let isethtype;
       if (crypto === "USDC" || crypto === "USDT") isethtype = false;
       else isethtype = true;
 
-      console.log(CryptoAddress);
 
-// for eth
+      // for eth
 
-if(crypto === "ETH"){
-  const tx = await contract.methods.buy(
-    '123',//ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6),
-    CryptoAddress,
-    promocode.toUpperCase() === "DOUG" ? true : false,
-  );
-  let encoded_tx = tx.encodeABI();
-let gasPrice = await web3.eth.getGasPrice();
+      if (crypto === "ETH") {
+        const tx = await contract.methods.buy(
+          '123',//ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6),
+          CryptoAddress,
+          promocode.toUpperCase() === "DOUG" ? true : false,
+        );
+        let encoded_tx = tx.encodeABI();
+        let gasPrice = await web3.eth.getGasPrice();
 
-let gasLimit = await web3.eth.estimateGas({
-  gasPrice: web3.utils.toHex(gasPrice),
-  to: TitoICO,
-  from: address,
-  data: encoded_tx,
-  value:inputAmount*10**18//ethers.utils.parseUnits(inputAmount,18)
-});
+        let gasLimit = await web3.eth.estimateGas({
+          gasPrice: web3.utils.toHex(gasPrice),
+          to: TitoICO,
+          from: address,
+          data: encoded_tx,
+          value: inputAmount * 10 ** 18//ethers.utils.parseUnits(inputAmount,18)
+        });
 
-let trx = await web3.eth.sendTransaction({
-  gasPrice: web3.utils.toHex(gasPrice),
-  gas: web3.utils.toHex(gasLimit),
-  to: TitoICO,
-  from: address,
-  data: encoded_tx,
-  value:inputAmount*10**18//ethers.utils.parseUnits(inputAmount,18)
-});
- // await tx.wait();
- if (trx.transactionHash) {
-  console.log(trx);
-  setLoader(false);
-  setTxDone(true);
- }
- return
-}
+        let trx = await web3.eth.sendTransaction({
+          gasPrice: web3.utils.toHex(gasPrice),
+          gas: web3.utils.toHex(gasLimit),
+          to: TitoICO,
+          from: address,
+          data: encoded_tx,
+          value: inputAmount * 10 ** 18//ethers.utils.parseUnits(inputAmount,18)
+        });
+        // await tx.wait();
+        if (trx.transactionHash) {
+          console.log(trx);
+          setLoader(false);
+          setTxDone(true);
+        }
+        return
+      }
 
 
-//for other 
+      //for other 
       const tx = await contract.methods.buy(
         ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6),
         CryptoAddress,
@@ -289,34 +293,35 @@ let trx = await web3.eth.sendTransaction({
       );
       let encoded_tx = tx.encodeABI();
 
-    let gasPrice = await web3.eth.getGasPrice();
+      let gasPrice = await web3.eth.getGasPrice();
 
-    let gasLimit = await web3.eth.estimateGas({
-      gasPrice: web3.utils.toHex(gasPrice),
-      to: TitoICO,
-      from: address,
-      data: encoded_tx,
-    });
+      let gasLimit = await web3.eth.estimateGas({
+        gasPrice: web3.utils.toHex(gasPrice),
+        to: TitoICO,
+        from: address,
+        data: encoded_tx,
+      });
 
-    let trx = await web3.eth.sendTransaction({
-      gasPrice: web3.utils.toHex(gasPrice),
-      gas: web3.utils.toHex(gasLimit),
-      to: TitoICO,
-      from: address,
-      data: encoded_tx,
-    });
-     // await tx.wait();
-     if (trx.transactionHash) {
-      console.log(trx);
-      setLoader(false);
-      setTxDone(true);
-     }
+      let trx = await web3.eth.sendTransaction({
+        gasPrice: web3.utils.toHex(gasPrice),
+        gas: web3.utils.toHex(gasLimit),
+        to: TitoICO,
+        from: address,
+        data: encoded_tx,
+      });
+      // await tx.wait();
+      if (trx.transactionHash) {
+        console.log(trx);
+        setLoader(false);
+        setTxDone(true);
+      }
 
 
     } catch (error) {
       setLoader(false);
-      alert(error.reason);
-      console.log(error);
+      let err = error.data?error.data.message:error.message
+      alert(err);
+      console.log(err);
     }
   };
 
@@ -329,9 +334,9 @@ let trx = await web3.eth.sendTransaction({
   //check allowance
   const checkAllowance = async () => {
     try {
-      let WBNBToken =   new web3.eth.Contract(WBNBABI,BNB)
-      let USDTToken =   new web3.eth.Contract(USDTABI,USDT)
-      let USDCToken =   new web3.eth.Contract(USDCABI,USDC)
+      let WBNBToken = new web3.eth.Contract(WBNBABI, BNB)
+      let USDTToken = new web3.eth.Contract(USDTABI, USDT)
+      let USDCToken = new web3.eth.Contract(USDCABI, USDC)
 
       if (crypto === "ETH") setIsAllowed(true);
       else {
@@ -398,36 +403,122 @@ let trx = await web3.eth.sendTransaction({
   useEffect(() => {
     setIsAllowed(false);
     checkAllowance();
-    console.log(isallowed);
   }, [inputAmount, crypto, address, isConnected, approveTxDone]);
 
   //approve contract address for token transfer
   const approveToken = async () => {
     try {
-
-      let WBNBToken =   new web3.eth.Contract(WBNBABI,BNB)
-      let USDTToken =   new web3.eth.Contract(USDTABI,USDT)
-      let USDCToken =   new web3.eth.Contract(USDCABI,USDC)
+      if(address === undefined){
+        alert("please connect wallet to proceed")
+        return
+      }
+      let WBNBToken = new web3.eth.Contract(WBNBABI, BNB)
+      let USDTToken = new web3.eth.Contract(USDTABI, USDT)
+      let USDCToken = new web3.eth.Contract(USDCABI, USDC)
 
 
 
       setLoader(true);
-
       if (crypto === "BNB") {
         const tx = await WBNBToken.methods.approve(TitoICO, approveAmount);
-        const data = await tx.wait();
-        setLoader(false);
-        setApproveTxDone(true);
+        //const data = await tx.wait();
+        //web3
+        let encoded_tx = tx.encodeABI();
+
+        let gasPrice = await web3.eth.getGasPrice();
+        
+
+        gasPrice=parseInt(gasPrice)+100000
+
+        let gasLimit = await web3.eth.estimateGas({
+          gasPrice: web3.utils.toHex(gasPrice),
+          to: BNB,
+          from: address,
+          data: encoded_tx,
+        });
+
+        let trx = await web3.eth.sendTransaction({
+          gasPrice: web3.utils.toHex(gasPrice),
+          gas: web3.utils.toHex(gasLimit),
+          to: BNB,
+          from: address,
+          data: encoded_tx,
+        });
+
+        // await tx.wait();
+        if (trx.transactionHash) {
+          console.log(trx);
+          setLoader(false);
+          setApproveTxDone(true);
+        }
+        //web3
+
+        // setLoader(false);
+        // setApproveTxDone(true);
       } else if (crypto === "USDT") {
         const tx = await USDTToken.methods.approve(TitoICO, approveAmount);
-        const data = await tx.wait();
-        setLoader(false);
-        setApproveTxDone(true);
+        // const data = await tx.wait();
+        //setLoader(false);
+        //setApproveTxDone(true);
+
+        //web3
+        let encoded_tx = tx.encodeABI();
+
+        let gasPrice = await web3.eth.getGasPrice();
+
+        let gasLimit = await web3.eth.estimateGas({
+          gasPrice: web3.utils.toHex(gasPrice),
+          to: USDT,
+          from: address,
+          data: encoded_tx,
+        });
+
+        let trx = await web3.eth.sendTransaction({
+          gasPrice: web3.utils.toHex(gasPrice),
+          gas: web3.utils.toHex(gasLimit),
+          to: USDT,
+          from: address,
+          data: encoded_tx,
+        });
+        // await tx.wait();
+        if (trx.transactionHash) {
+          console.log(trx);
+          setLoader(false);
+          setApproveTxDone(true);
+        }
+        //web3
+
       } else if (crypto === "USDC") {
         const tx = await USDCToken.methods.approve(TitoICO, approveAmount);
-        const data = await tx.wait();
-        setLoader(false);
-        setApproveTxDone(true);
+        // const data = await tx.wait();
+        //setLoader(false);
+        // setApproveTxDone(true);
+        //web3
+        let encoded_tx = tx.encodeABI();
+
+        let gasPrice = await web3.eth.getGasPrice();
+
+        let gasLimit = await web3.eth.estimateGas({
+          gasPrice: web3.utils.toHex(gasPrice),
+          to: USDC,
+          from: address,
+          data: encoded_tx,
+        });
+
+        let trx = await web3.eth.sendTransaction({
+          gasPrice: web3.utils.toHex(gasPrice),
+          gas: web3.utils.toHex(gasLimit),
+          to: USDC,
+          from: address,
+          data: encoded_tx,
+        });
+        // await tx.wait();
+        if (trx.transactionHash) {
+          console.log(trx);
+          setLoader(false);
+          setApproveTxDone(true);
+        }
+        //web3
       } else console.log("not default crypto");
 
       // if (crypto === "BNB") {
@@ -450,8 +541,9 @@ let trx = await web3.eth.sendTransaction({
       setLoader(false);
     } catch (error) {
       setLoader(false);
-      alert(error.reason);
-      console.log(error);
+      let err = error.data?error.data.message:error.message
+      alert(err);
+      console.log(err);
     }
   };
 
@@ -516,7 +608,7 @@ let trx = await web3.eth.sendTransaction({
                     Next Stage Price
                   </p>
                   <h2 className="text-xs sm:text-sm font-semibold text-sky-600 3xl:text-lg">
-                    {nextStagePrice / 10000} USD 
+                    {nextStagePrice / 10000} USD
                   </h2>
                 </div>
                 <div className="bg-gradient-to-b from-gray-900 to-gray-800 px-3 py-2 sm:px-4 sm:py-2.5 rounded-md text-right space-y-1">
@@ -802,8 +894,8 @@ let trx = await web3.eth.sendTransaction({
                     {loader
                       ? "Processing...."
                       : isallowed
-                      ? "Buy $TITO"
-                      : "Approve Token"}
+                        ? "Buy $TITO"
+                        : "Approve Token"}
                   </button>
                   {/* <div className="text-center mb-5 mt-2">
 
