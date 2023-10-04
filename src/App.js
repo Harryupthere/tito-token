@@ -11,43 +11,43 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet } from "wagmi/chains";
+import { mainnet,polygonMumbai } from "wagmi/chains";
 import connectContract from "./config";
 
-const chains = [mainnet];
+const chains = [mainnet,polygonMumbai];
 const projectId = "6b098530af4797b4b0dcb37e0534845a";
 const projectChainId = "1";
 // Add Network on wallet
-try {
-  console.log(
-    "window.ethereum.networkVersion : ",
-    window.ethereum.networkVersion,
-    typeof window.ethereum.networkVersion
-  );
-  if (window.ethereum.networkVersion != projectChainId.toString()) {
-    window.ethereum.request({
-      method: "wallet_addEthereumChain",
-      params: [
-        {
-          chainId: "0x13881",
-          rpcUrls: ["https://mainnet-infura.brave.com/"],
-          chainName: "Mainnet",
-          nativeCurrency: {
-            name: "ETH",
-            symbol: "ETH",
-            decimals: 18,
-          },
-          blockExplorerUrls: ["https://etherscan.io/"],
-        },
-      ],
-    });
-  }
-} catch (error) {
-    window.location.replace(
-      "https://metamask.app.link/dapp/www.titotoken.me/"
-    );
-  // alert(error);
-}
+// try {
+//   console.log(
+//     "window.ethereum.networkVersion : ",
+//     window.ethereum.networkVersion,
+//     typeof window.ethereum.networkVersion
+//   );
+//   if (window.ethereum.networkVersion != projectChainId.toString()) {
+//     window.ethereum.request({
+//       method: "wallet_addEthereumChain",
+//       params: [
+//         {
+//           chainId: "0x1",
+//           rpcUrls: ["https://mainnet-infura.brave.com/"],
+//           chainName: "Mainnet",
+//           nativeCurrency: {
+//             name: "ETH",
+//             symbol: "ETH",
+//             decimals: 18,
+//           },
+//           blockExplorerUrls: ["https://etherscan.io/"],
+//         },
+//       ],
+//     });
+//   }
+// } catch (error) {
+//     // window.location.replace(
+//     //   "https://metamask.app.link/dapp/www.titotoken.me/"
+//     // );
+//   console.log(error);
+// }
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
 const wagmiConfig = createConfig({
@@ -58,7 +58,7 @@ const wagmiConfig = createConfig({
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 const App = () => {
-  connectContract();
+  //connectContract();
   return (
     <>
       <WagmiConfig config={wagmiConfig}>

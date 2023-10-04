@@ -4,6 +4,7 @@ import TitoLogo from "../images/tito-logo.png";
 import { NavLink } from "react-router-dom";
 import { useWeb3Modal } from "@web3modal/react";
 import { useAccount } from "wagmi";
+import whitePaper from "../images/whitepaper/TITO_WHITE_PAPER.pdf";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
@@ -35,7 +36,7 @@ const Header = () => {
               <a
                 target="_blank"
                 className="text-white font-normal text-sm xl:text-base hover:text-sky-600"
-                href="https://whitepaper.borroe.finance/introduction/borroe-finance"
+                href={whitePaper}
               >
                 Whitepaper
               </a>
@@ -46,20 +47,20 @@ const Header = () => {
               >
                 Tito
               </a>
-              <a
+              {/* <a
                 target="_blank"
                 className="text-white font-normal text-sm xl:text-base hover:text-sky-600"
                 href="https://gleam.io/4bs1I/borroe-gleam-summer-defi-giveaway"
               >
                 Win 50K
-              </a>
-              <a
+              </a> */}
+              {/* <a
                 target=""
                 className="text-white font-normal text-sm xl:text-base hover:text-sky-600"
                 href="/howtobuy"
               >
                 How to buy
-              </a>
+              </a> */}
             </div>
             <div className="items-center justifybox height same and content size same, Its difficult to manage the ssection becuase images sizes is too much, if i set the images its look strechable -end hidden gap-x-4 lg:flex xl:gap-x-8">
               <NavLink
@@ -161,7 +162,7 @@ const Header = () => {
                       <a
                         target="_blank"
                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-sky-600"
-                        href="https://whitepaper.borroe.finance/introduction/borroe-finance"
+                        href={whitePaper}
                         onClick={() => {
                           setToggle(!toggle);
                         }}
@@ -178,7 +179,7 @@ const Header = () => {
                       >
                         Tito
                       </a>
-                      <a
+                      {/* <a
                         target="_blank"
                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-sky-600"
                         href="https://gleam.io/4bs1I/borroe-gleam-summer-defi-giveaway"
@@ -187,8 +188,8 @@ const Header = () => {
                         }}
                       >
                         Win 50K
-                      </a>
-                      <a
+                      </a> */}
+                      {/* <a
                         target=""
                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:text-sky-600"
                         href="/howtobuy"
@@ -197,7 +198,7 @@ const Header = () => {
                         }}
                       >
                         How to buy
-                      </a>
+                      </a> */}
                     </div>
                     <div className="flex flex-1 items-center gap-x-6 py-6">
                       <NavLink

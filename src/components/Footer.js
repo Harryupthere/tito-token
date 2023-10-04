@@ -3,12 +3,12 @@ import twitter from "../images/social_logo/twitter.png";
 import youtube from "../images/social_logo/youtube.png";
 import telegram from "../images/social_logo/telegram.png";
 
-
 const Footer = () => {
-    return (<>
-        <footer className="border-t border-neutral-700 bg-gray-900">
-            <div className="mx-auto max-w-7xl overflow-hidden px-6 md:py-24 py-12">
-                <div className="flex justify-center items-center space-x-2 sm:space-x-6">
+  return (
+    <>
+      <footer className="border-t border-neutral-700 bg-gray-900">
+        <div className="mx-auto max-w-7xl overflow-hidden px-6 md:py-24 py-12">
+          {/* <div className="flex justify-center items-center space-x-2 sm:space-x-6">
                     <a href="https://twitter.com/Borroe_Finance" target="_blank" rel="noreferrer">
                         <img className="w-10 md:w-12 xl:w-16  transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-300" alt="twitter" src={twitter} />
                     </a>
@@ -29,22 +29,73 @@ const Footer = () => {
                         <img className="w-10 md:w-12 xl:w-16  transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-300" alt="telegram-News" src={telegram} />
 
                     </a>
-                </div>
-                <nav className="py-4 lg:flex sm:justify-center grid md:grid-cols-3 grid-cols-1 items-center lg:space-x-12 mt-4 " aria-label="Footer">
-                    <a target="_blank" className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6" href="https://whitepaper.borroe.finance/introduction/borroe-finance">Whitepaper</a>
-                    <a target="" className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6" href="/howtobuy">How to buy</a>
-                    <a target="" className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6" href="/howtobuy">New to crypto</a>
-                    <a target="_blank" className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6" href="https://whitepaper.borroe.finance/token-overview/smart-contract-audit">Audit</a>
-                    <a target="" className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6" href="/terms">Terms and Conditions</a>
-                    <a target="_blank" className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6" href="https://medium.com/@borroe.finance">Blog</a>
-                    <a target="" className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6" href="/contact">Contact us</a>
-                </nav>
-                <p className="md:text-center text-sm  text-gray-500 max-w-2xl mx-auto"><strong>Disclaimer:</strong>
-                    Cryptocurrency may be unregulated in your jurisdiction. The value of cryptocurrencies may go down as well as up. Profits may be subject to capital gains or other taxes application in your jurisdiction.</p>
-                <p className="md:text-center text-sm  text-gray-500 mt-6">Copyright © 2023 Tito Finance. All Rights Reserved.</p>
-            </div>
-        </footer>
-    </>)
-
-}
+                </div> */}
+          {/* <nav
+            className="py-4 lg:flex sm:justify-center grid md:grid-cols-3 grid-cols-1 items-center lg:space-x-12 mt-4 "
+            aria-label="Footer"
+          >
+            <a
+              target="_blank"
+              className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6"
+              href="https://whitepaper.borroe.finance/introduction/borroe-finance"
+            >
+              Whitepaper
+            </a>
+            <a
+              target=""
+              className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6"
+              href="/howtobuy"
+            >
+              How to buy
+            </a>
+            <a
+              target=""
+              className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6"
+              href="/howtobuy"
+            >
+              New to crypto
+            </a>
+            <a
+              target="_blank"
+              className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6"
+              href="https://whitepaper.borroe.finance/token-overview/smart-contract-audit"
+            >
+              Audit
+            </a>
+            <a
+              target=""
+              className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6"
+              href="/terms"
+            >
+              Terms and Conditions
+            </a>
+            <a
+              target="_blank"
+              className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6"
+              href="https://medium.com/@borroe.finance"
+            >
+              Blog
+            </a>
+            <a
+              target=""
+              className="text-base font-semibold text-white md:text-center hover:text-sky-600 pb-6"
+              href="/contact"
+            >
+              Contact us
+            </a>
+          </nav> */}
+          <p className="md:text-center text-sm  text-gray-500 max-w-2xl mx-auto">
+            <strong>Disclaimer:</strong>
+            Cryptocurrency may be unregulated in your jurisdiction. The value of
+            cryptocurrencies may go down as well as up. Profits may be subject
+            to capital gains or other taxes application in your jurisdiction.
+          </p>
+          <p className="md:text-center text-sm  text-gray-500 mt-6">
+            Copyright © 2023 Tito Finance. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
+    </>
+  );
+};
 export default Footer;

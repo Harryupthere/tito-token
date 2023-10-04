@@ -7,12 +7,12 @@ export const Null = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 // const TitoICO = "0x0A1410875Cf8c5feb3dE0d6D8CD382e5e8ac2764";
 
 
-export const USDT = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
-export const USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
-export const BNB = "0xB8c77482e45F1F44dE1745F52C74426C631bDD52";
-export const TitoICO = "0x95266619603fe496f7ea0196e15a30bb6b53b57e";
+export const USDT = "0xf2F70D2D317b63108Ea76BFDA51e2Ae7CC959F81"//"0xdAC17F958D2ee523a2206206994597C13D831ec7";
+export const USDC = "0xD91AA8Aa352994752124755BeF24C653Ef2Ce72e"//"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
+export const BNB = "0x717742DF2adcCCEf91fc08ed9454Db98c5044ad9"//"0xB8c77482e45F1F44dE1745F52C74426C631bDD52";
+export const TitoICO = "0xf6Eb1D157De83c16632f9120a2BE61B8476744aB"//"0x6BA6757DC296dEe08a2F5b99bF334034541895Eb";
 
-
+export const matic_testnet = "https://rpc-mumbai.maticvigil.com/";
 
 const TitoIcoAbi = [
   {
@@ -989,9 +989,9 @@ const connectContract = async () => {
     USDTToken = new ethers.Contract(USDT, USDTABI, signer);
   } catch (err) {
     console.log("err : ", err);
-    alert(
-      "Not Supported : Please Install Metamask extension or use this application in metamask mobile application browser"
-    );
+    // alert(
+    //   "Not Supported : Please Install Metamask extension or use this application in metamask mobile application browser"
+    // );
   }
 };
 

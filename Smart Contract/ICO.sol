@@ -229,9 +229,9 @@ interface IBEP20 {
 
 contract TitoICO is Ownable {
     address private constant Null = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
-    address _wbnbAddress = 0xB8c77482e45F1F44dE1745F52C74426C631bDD52;
-    address _usdtAddress = 0xdAC17F958D2ee523a2206206994597C13D831ec7;
-    address _usdcAddress = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+    address _wbnbAddress = 0x717742DF2adcCCEf91fc08ed9454Db98c5044ad9;
+    address _usdtAddress = 0xd5cD73f27414A22fcf91d3Ef5B1b1aba67088e6d;
+    address _usdcAddress = 0x7190e5d48af2646dBa38c2d443CE50E33BFCC1A9;
 
     uint256 public Beps = 10000;
     uint256[] public rate = [100, 150, 200, 500];
