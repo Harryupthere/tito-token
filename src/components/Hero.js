@@ -13,6 +13,7 @@ import USDCABI from "../USDCABI.json";
 import USDTABI from "../USDTABI.json";
 import WBNBABI from "../WBNBABI.json";
 import TitoIcoAbi from "../TitoIcoAbi.json";
+import Transaction from "./Transaction";
 
 const Hero = () => {
   // let web3 = new Web3(window.ethereum);
@@ -1030,7 +1031,7 @@ const Hero = () => {
                         ? "Buy $TITO"
                         : "Approve Token"}
                   </button>
-
+                   <Transaction coinAddress={CryptoAddress} amount={inputAmount} />
 
                   {/* <div className="text-center mb-5 mt-2">
 
