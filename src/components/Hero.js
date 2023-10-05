@@ -312,6 +312,20 @@ const Hero = () => {
   //   }
   // };
 
+  const buy = async () => {
+    if (address === undefined) {
+      alert("please connect wallet to proceed");
+      return;
+    }
+
+    setLoader(true);
+    if (!isallowed) {
+      let result = await approveToken()
+      if (result) {
+        await buy1()
+      }
+    }
+  }
 
   const buy1 = async () => {
     try {
@@ -326,113 +340,64 @@ const Hero = () => {
       setLoader(true);
 
 
-      if (!isallowed) {
-        let result = await approveToken()
 
-        if (!result) {
-          alert("something went wrong")
-          return
-        } else {
+      let isethtype;
+      if (crypto === "USDC" || crypto === "USDT") isethtype = false;
+      else isethtype = true;
 
-          let isethtype;
-          if (crypto === "USDC" || crypto === "USDT") isethtype = false;
-          else isethtype = true;
+      // for eth
 
-          // for eth
-
-          if (crypto === "ETH") {
-            setLoader(true);
-
-            const { hash } = await writeContract({
-              address: TitoICO,
-              abi: TitoIcoAbi,
-              functionName: 'buy',
-              args: ["123", CryptoAddress,
-                promocode.toUpperCase() === "DOUG" ? true : false],
-              value: inputAmount * 10 ** 18,
-            })
-
-            if (hash) {
-
-              setTimeout(() => {
-                setLoader(false);
-                setTxDone(true);
-              }, 4000)
-
-            }
-
-
-            return
-          }
-
-          //for other
-          const { hash } = await writeContract({
-            address: TitoICO,
-            abi: TitoIcoAbi,
-            functionName: 'buy',
-            args: [ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6), CryptoAddress,
-            promocode.toUpperCase() === "DOUG" ? true : false],
-          })
-          // await tx.wait();
-          if (hash) {
-            console.log(hash);
-            setTimeout(() => {
-              setLoader(false);
-              setTxDone(true);
-            }, 4000)
-          }
-        }
-
-
-      } else {
-        let isethtype;
-        if (crypto === "USDC" || crypto === "USDT") isethtype = false;
-        else isethtype = true;
-
-        // for eth
-
-        if (crypto === "ETH") {
-          setLoader(true);
-
-          const { hash } = await writeContract({
-            address: TitoICO,
-            abi: TitoIcoAbi,
-            functionName: 'buy',
-            args: ["123", CryptoAddress,
-              promocode.toUpperCase() === "DOUG" ? true : false],
-            value: inputAmount * 10 ** 18,
-          })
-
-          if (hash) {
-
-            setTimeout(() => {
-              setLoader(false);
-              setTxDone(true);
-            }, 4000)
-
-          }
-
-
-          return
-        }
-
-        //for other
+      if (crypto === "ETH") {
+        setLoader(true);
+        let amount = inputAmount * 10 ** 18;
+        amount = amount.toString()
         const { hash } = await writeContract({
           address: TitoICO,
           abi: TitoIcoAbi,
           functionName: 'buy',
-          args: [ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6), CryptoAddress,
-          promocode.toUpperCase() === "DOUG" ? true : false],
+          args: ["123", CryptoAddress,
+            promocode.toUpperCase() === "DOUG" ? true : false],
+          value: amount,
         })
-        // await tx.wait();
+
         if (hash) {
-          console.log(hash);
+
           setTimeout(() => {
             setLoader(false);
             setTxDone(true);
           }, 4000)
+
         }
+
+
+        return
       }
+
+      //for other
+      let dacimals = crypto === "USDC" || crypto === "USDT" ? 6 : 18
+      let amount = inputAmount * 10 ** dacimals
+      amount = amount.toString()
+      const { hash } = await writeContract({
+        address: TitoICO,
+        abi: TitoIcoAbi,
+        functionName: 'buy',
+        args: [amount, CryptoAddress,
+          promocode.toUpperCase() === "DOUG" ? true : false],
+      })
+      // await tx.wait();
+      if (hash) {
+        console.log(hash);
+        setTimeout(() => {
+          setLoader(false);
+          setTxDone(true);
+        }, 4000)
+      }
+
+
+
+
+
+
     } catch (error) {
       setLoader(false);
       let err = error.data ? error.data.message : error.message;
@@ -672,14 +637,14 @@ const Hero = () => {
         alert("please connect wallet to proceed");
         return;
       }
-
-
+      let decimals = crypto == "USDT" || crypto == "USDC" ? 6 : 8;
+      let amount = inputAmount * 10 ** decimals
       setLoader(true);
       const { hash } = await writeContract({
         address: crypto == "USDT" ? USDT : crypto == "USDC" ? USDC : BNB,
         abi: crypto == "USDT" ? USDTABI : crypto == "USDC" ? USDCABI : WBNBABI,
         functionName: 'approve',
-        args: [TitoICO, approveAmount],
+        args: [TitoICO, amount],
       })
 
       setLoader(false);
