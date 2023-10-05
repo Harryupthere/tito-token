@@ -243,182 +243,90 @@ const Hero = () => {
   }
 
 
-   const buy1 = async () => {
-    try {
-  let web3 = new Web3(window.ethereum);
-
-      if (address === undefined) {
-        alert("please connect wallet to proceed");
-        return;
-      }
-      let contract = new web3.eth.Contract(TitoIcoAbi, TitoICO);
-
-      setLoader(true);
-      let isethtype;
-      if (crypto === "USDC" || crypto === "USDT") isethtype = false;
-      else isethtype = true;
-
-      // for eth
-
-      if (crypto === "ETH") {
-        const tx = await contract.methods.buy(
-          "123", //ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6),
-          CryptoAddress,
-          promocode.toUpperCase() === "DOUG" ? true : false
-        );
-        let encoded_tx = tx.encodeABI();
-        let gasPrice = await web3.eth.getGasPrice();
-
-        let gasLimit = await web3.eth.estimateGas({
-          gasPrice: web3.utils.toHex(gasPrice),
-          to: TitoICO,
-          from: address,
-          data: encoded_tx,
-          value: inputAmount * 10 ** 18, //ethers.utils.parseUnits(inputAmount,18)
-        });
-
-        let trx = await web3.eth.sendTransaction({
-          gasPrice: web3.utils.toHex(gasPrice),
-          gas: web3.utils.toHex(gasLimit),
-          to: TitoICO,
-          from: address,
-          data: encoded_tx,
-          value: inputAmount * 10 ** 18, //ethers.utils.parseUnits(inputAmount,18)
-        });
-        // await tx.wait();
-        if (trx.transactionHash) {
-          console.log(trx);
-          setLoader(false);
-          setTxDone(true);
-        }
-        return;
-      }
-
-      //for other
-      const tx = await contract.methods.buy(
-        ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6),
-        CryptoAddress,
-        promocode.toUpperCase() === "DOUG" ? true : false
-      );
-      let encoded_tx = tx.encodeABI();
-
-      let gasPrice = await web3.eth.getGasPrice();
-
-      let gasLimit = await web3.eth.estimateGas({
-        gasPrice: web3.utils.toHex(gasPrice),
-        to: TitoICO,
-        from: address,
-        data: encoded_tx,
-      });
-
-      let trx = await web3.eth.sendTransaction({
-        gasPrice: web3.utils.toHex(gasPrice),
-        gas: web3.utils.toHex(gasLimit),
-        to: TitoICO,
-        from: address,
-        data: encoded_tx,
-      });
-      // await tx.wait();
-      if (trx.transactionHash) {
-        console.log(trx);
-        setLoader(false);
-        setTxDone(true);
-      }
-    } catch (error) {
-      setLoader(false);
-      let err = error.data ? error.data.message : error.message;
-      alert(err);
-      console.log(err);
-    }
-  };
-
-
-  // const buy1 = async () => {
+  //  const buy1 = async () => {
   //   try {
+  //     const polygonProvider = new Web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/');
 
-
+  // let web3 = new Web3(polygonProvider);
+  //   let acc = await web3.eth.getAccounts()
+    
   //     if (address === undefined) {
   //       alert("please connect wallet to proceed");
   //       return;
   //     }
-
+  //     let contract = new web3.eth.Contract(TitoIcoAbi, TitoICO);
 
   //     setLoader(true);
-
-
-
   //     let isethtype;
   //     if (crypto === "USDC" || crypto === "USDT") isethtype = false;
   //     else isethtype = true;
 
   //     // for eth
-       
+
   //     if (crypto === "ETH") {
-  //       setLoader(true);
-  //       alert(inputAmount)
-  //       alert("alert")
-  //       let amount = inputAmount * 10 ** 18;
-  //       alert(amount)
-  //       alert("alert 1")
+  //       const tx = await contract.methods.buy(
+  //         "123", //ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6),
+  //         CryptoAddress,
+  //         promocode.toUpperCase() === "DOUG" ? true : false
+  //       );
+  //       let encoded_tx = tx.encodeABI();
+  //       let gasPrice = await web3.eth.getGasPrice();
+       
+  //       let gasLimit = await web3.eth.estimateGas({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         to: TitoICO,
+  //         from: address,
+  //         data: encoded_tx,
+  //         value: inputAmount * 10 ** 18, //ethers.utils.parseUnits(inputAmount,18)
+  //       });
 
-  //       amount = amount.toString()
-  //       alert(amount)
-  //       alert("alert 2")
-  //       const { hash } = await writeContract({
-  //         address: TitoICO,
-  //         abi: TitoIcoAbi,
-  //         functionName: 'buy',
-  //         args: ["123", CryptoAddress,
-  //           promocode.toUpperCase() === "DOUG" ? true : false],
-  //         value: amount,
-  //       })
-
-  //       if (hash) {
-
-  //         setTimeout(() => {
-  //           setLoader(false);
-  //           setTxDone(true);
-  //         }, 4000)
-
+  //       let trx = await web3.eth.sendTransaction({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         gas: web3.utils.toHex(gasLimit),
+  //         to: TitoICO,
+  //         from: address,
+  //         data: encoded_tx,
+  //         value: inputAmount * 10 ** 18, //ethers.utils.parseUnits(inputAmount,18)
+  //       });
+  //       // await tx.wait();
+  //       if (trx.transactionHash) {
+  //         console.log(trx);
+  //         setLoader(false);
+  //         setTxDone(true);
   //       }
-
-
-  //       return
+  //       return;
   //     }
 
   //     //for other
-  //     let dacimals = crypto === "USDC" || crypto === "USDT" ? 6 : 18
-  //     alert(dacimals)
-  //     alert("alert")
-  //     alert(inputAmount)
-  //     alert("alert 1")
-  //     let amount = inputAmount * 10 ** dacimals
-  //     alert(amount)
-  //     alert("alert 2")
-  //     amount = amount.toString()
-  //     alert(amount)
-  //     alert("alert 3")
-  //     const { hash } = await writeContract({
-  //       address: TitoICO,
-  //       abi: TitoIcoAbi,
-  //       functionName: 'buy',
-  //       args: [amount, CryptoAddress,
-  //         promocode.toUpperCase() === "DOUG" ? true : false],
-  //     })
+  //     const tx = await contract.methods.buy(
+  //       ethers.utils.parseUnits(inputAmount, isethtype ? 18 : 6),
+  //       CryptoAddress,
+  //       promocode.toUpperCase() === "DOUG" ? true : false
+  //     );
+  //     let encoded_tx = tx.encodeABI();
+
+  //     let gasPrice = await web3.eth.getGasPrice();
+
+  //     let gasLimit = await web3.eth.estimateGas({
+  //       gasPrice: web3.utils.toHex(gasPrice),
+  //       to: TitoICO,
+  //       from: address,
+  //       data: encoded_tx,
+  //     });
+
+  //     let trx = await web3.eth.sendTransaction({
+  //       gasPrice: web3.utils.toHex(gasPrice),
+  //       gas: web3.utils.toHex(gasLimit),
+  //       to: TitoICO,
+  //       from: address,
+  //       data: encoded_tx,
+  //     });
   //     // await tx.wait();
-  //     if (hash) {
-  //       console.log(hash);
-  //       setTimeout(() => {
-  //         setLoader(false);
-  //         setTxDone(true);
-  //       }, 4000)
+  //     if (trx.transactionHash) {
+  //       console.log(trx);
+  //       setLoader(false);
+  //       setTxDone(true);
   //     }
-
-
-
-
-
-
   //   } catch (error) {
   //     setLoader(false);
   //     let err = error.data ? error.data.message : error.message;
@@ -427,143 +335,80 @@ const Hero = () => {
   //   }
   // };
 
- //approve contract address for token transfer
-  
- 
- const approveToken = async () => {
-    try {
 
+  const buy1 = async () => {
+    try {
 
 
       if (address === undefined) {
         alert("please connect wallet to proceed");
         return;
       }
-  let web3 = new Web3(window.ethereum);
 
-      let WBNBToken = new web3.eth.Contract(WBNBABI, BNB);
-      let USDTToken = new web3.eth.Contract(USDTABI, USDT);
-      let USDCToken = new web3.eth.Contract(USDCABI, USDC);
 
       setLoader(true);
-      if (crypto === "BNB") {
-        const tx = await WBNBToken.methods.approve(TitoICO, approveAmount);
-        //const data = await tx.wait();
-        //web3
-        let encoded_tx = tx.encodeABI();
 
-        let gasPrice = await web3.eth.getGasPrice();
 
-        gasPrice = parseInt(gasPrice) + 100000;
 
-        let gasLimit = await web3.eth.estimateGas({
-          gasPrice: web3.utils.toHex(gasPrice),
-          to: BNB,
-          from: address,
-          data: encoded_tx,
-        });
+      let isethtype;
+      if (crypto === "USDC" || crypto === "USDT") isethtype = false;
+      else isethtype = true;
 
-        let trx = await web3.eth.sendTransaction({
-          gasPrice: web3.utils.toHex(gasPrice),
-          gas: web3.utils.toHex(gasLimit),
-          to: BNB,
-          from: address,
-          data: encoded_tx,
-        });
+      // for eth
 
-        // await tx.wait();
-        if (trx.transactionHash) {
-          console.log(trx);
-          setLoader(false);
-          setApproveTxDone(true);
+      if (crypto === "ETH") {
+        setLoader(true);
+      
+        let amount = parseInt((inputAmount) * parseInt(10 ** 18));
+        
+        const { hash } = await writeContract({
+          address: TitoICO,
+          abi: TitoIcoAbi,
+          functionName: 'buy',
+          args: ["123", CryptoAddress,
+            promocode.toUpperCase() === "DOUG" ? true : false],
+          value: amount.toString(),
+        })
+
+        if (hash) {
+
+          setTimeout(() => {
+            setLoader(false);
+            setTxDone(true);
+          }, 4000)
+
         }
-        //web3
 
-        // setLoader(false);
-        // setApproveTxDone(true);
-      } else if (crypto === "USDT") {
-        const tx = await USDTToken.methods.approve(TitoICO, approveAmount);
-        // const data = await tx.wait();
-        //setLoader(false);
-        //setApproveTxDone(true);
 
-        //web3
-        let encoded_tx = tx.encodeABI();
+        return
+      }
 
-        let gasPrice = await web3.eth.getGasPrice();
-
-        let gasLimit = await web3.eth.estimateGas({
-          gasPrice: web3.utils.toHex(gasPrice),
-          to: USDT,
-          from: address,
-          data: encoded_tx,
-        });
-
-        let trx = await web3.eth.sendTransaction({
-          gasPrice: web3.utils.toHex(gasPrice),
-          gas: web3.utils.toHex(gasLimit),
-          to: USDT,
-          from: address,
-          data: encoded_tx,
-        });
-        // await tx.wait();
-        if (trx.transactionHash) {
-          console.log(trx);
+      //for other
+      let dacimals = crypto === "USDC" || crypto === "USDT" ? 6 : 18
+      
+      let amount = parseInt((inputAmount) * parseInt(10 ** dacimals))
+     
+      const { hash } = await writeContract({
+        address: TitoICO,
+        abi: TitoIcoAbi,
+        functionName: 'buy',
+        args: [amount, CryptoAddress,
+          promocode.toUpperCase() === "DOUG" ? true : false],
+      })
+      // await tx.wait();
+      if (hash) {
+        console.log(hash);
+        setTimeout(() => {
           setLoader(false);
-          setApproveTxDone(true);
-        }
-        //web3
-      } else if (crypto === "USDC") {
-        const tx = await USDCToken.methods.approve(TitoICO, approveAmount);
-        // const data = await tx.wait();
-        //setLoader(false);
-        // setApproveTxDone(true);
-        //web3
-        let encoded_tx = tx.encodeABI();
+          setTxDone(true);
+        }, 4000)
+      }
 
-        let gasPrice = await web3.eth.getGasPrice();
 
-        let gasLimit = await web3.eth.estimateGas({
-          gasPrice: web3.utils.toHex(gasPrice),
-          to: USDC,
-          from: address,
-          data: encoded_tx,
-        });
 
-        let trx = await web3.eth.sendTransaction({
-          gasPrice: web3.utils.toHex(gasPrice),
-          gas: web3.utils.toHex(gasLimit),
-          to: USDC,
-          from: address,
-          data: encoded_tx,
-        });
-        // await tx.wait();
-        if (trx.transactionHash) {
-          console.log(trx);
-          setLoader(false);
-          setApproveTxDone(true);
-        }
-        //web3
-      } else console.log("not default crypto");
 
-      // if (crypto === "BNB") {
-      //   const tx = await WBNBToken.methods.approve(contract.address, approveAmount);
-      //   const data = await tx.wait();
-      //   setLoader(false);
-      //   setApproveTxDone(true);
-      // } else if (crypto === "USDT") {
-      //   const tx = await USDTToken.methods.approve(contract.address, approveAmount);
-      //   const data = await tx.wait();
-      //   setLoader(false);
-      //   setApproveTxDone(true);
-      // } else if (crypto === "USDC") {
-      //   const tx = await USDCToken.methods.approve(contract.address, approveAmount);
-      //   const data = await tx.wait();
-      //   setLoader(false);
-      //   setApproveTxDone(true);
-      // } else console.log("not default crypto");
 
-      setLoader(false);
+
     } catch (error) {
       setLoader(false);
       let err = error.data ? error.data.message : error.message;
@@ -571,7 +416,10 @@ const Hero = () => {
       console.log(err);
     }
   };
-  
+
+  //approve contract address for token transfer
+
+
   // const approveToken = async () => {
   //   try {
 
@@ -581,27 +429,172 @@ const Hero = () => {
   //       alert("please connect wallet to proceed");
   //       return;
   //     }
-  //     let decimals = crypto == "USDT" || crypto == "USDC" ? 6 : 8;
-  //     let amount = inputAmount * 10 ** decimals
+  //     const polygonProvider = new Web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/');
+
+  //     let web3 = new Web3(polygonProvider);
+
+  //     let WBNBToken = new web3.eth.Contract(WBNBABI, BNB);
+  //     let USDTToken = new web3.eth.Contract(USDTABI, USDT);
+  //     let USDCToken = new web3.eth.Contract(USDCABI, USDC);
+
   //     setLoader(true);
-  //     const { hash } = await writeContract({
-  //       address: crypto == "USDT" ? USDT : crypto == "USDC" ? USDC : BNB,
-  //       abi: crypto == "USDT" ? USDTABI : crypto == "USDC" ? USDCABI : WBNBABI,
-  //       functionName: 'approve',
-  //       args: [TitoICO, amount],
-  //     })
+  //     if (crypto === "BNB") {
+  //       const tx = await WBNBToken.methods.approve(TitoICO, approveAmount);
+  // //const data = await tx.wait();
+  //       //web3
+  //       let encoded_tx = tx.encodeABI();
+
+  //       let gasPrice = await web3.eth.getGasPrice();
+
+  //       gasPrice = parseInt(gasPrice) + 100000;
+
+  //       let gasLimit = await web3.eth.estimateGas({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         to: BNB,
+  //         from: address,
+  //         data: encoded_tx,
+  //       });
+
+  //       let trx = await web3.eth.sendTransaction({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         gas: web3.utils.toHex(gasLimit),
+  //         to: BNB,
+  //         from: address,
+  //         data: encoded_tx,
+  //       });
+
+  //       // await tx.wait();
+  //       if (trx.transactionHash) {
+  //         console.log(trx);
+  //         setLoader(false);
+  //         setApproveTxDone(true);
+  //       }
+  //       //web3
+
+  //       // setLoader(false);
+  //       // setApproveTxDone(true);
+  //     } else if (crypto === "USDT") {
+  //       const tx = await USDTToken.methods.approve(TitoICO, approveAmount);
+  //       // const data = await tx.wait();
+  //       //setLoader(false);
+  //       //setApproveTxDone(true);
+
+  //       //web3
+  //       let encoded_tx = tx.encodeABI();
+
+  //       let gasPrice = await web3.eth.getGasPrice();
+
+  //       let gasLimit = await web3.eth.estimateGas({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         to: USDT,
+  //         from: address,
+  //         data: encoded_tx,
+  //       });
+
+  //       let trx = await web3.eth.sendTransaction({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         gas: web3.utils.toHex(gasLimit),
+  //         to: USDT,
+  //         from: address,
+  //         data: encoded_tx,
+  //       });
+  //       // await tx.wait();
+  //       if (trx.transactionHash) {
+  //         console.log(trx);
+  //         setLoader(false);
+  //         setApproveTxDone(true);
+  //       }
+  //       //web3
+  //     } else if (crypto === "USDC") {
+  //       const tx = await USDCToken.methods.approve(TitoICO, approveAmount);
+  //       // const data = await tx.wait();
+  //       //setLoader(false);
+  //       // setApproveTxDone(true);
+  //       //web3
+  //       let encoded_tx = tx.encodeABI();
+
+  //       let gasPrice = await web3.eth.getGasPrice();
+
+  //       let gasLimit = await web3.eth.estimateGas({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         to: USDC,
+  //         from: address,
+  //         data: encoded_tx,
+  //       });
+
+  //       let trx = await web3.eth.sendTransaction({
+  //         gasPrice: web3.utils.toHex(gasPrice),
+  //         gas: web3.utils.toHex(gasLimit),
+  //         to: USDC,
+  //         from: address,
+  //         data: encoded_tx,
+  //       });
+  //       // await tx.wait();
+  //       if (trx.transactionHash) {
+  //         console.log(trx);
+  //         setLoader(false);
+  //         setApproveTxDone(true);
+  //       }
+  //       //web3
+  //     } else console.log("not default crypto");
+
+  //     // if (crypto === "BNB") {
+  //     //   const tx = await WBNBToken.methods.approve(contract.address, approveAmount);
+  //     //   const data = await tx.wait();
+  //     //   setLoader(false);
+  //     //   setApproveTxDone(true);
+  //     // } else if (crypto === "USDT") {
+  //     //   const tx = await USDTToken.methods.approve(contract.address, approveAmount);
+  //     //   const data = await tx.wait();
+  //     //   setLoader(false);
+  //     //   setApproveTxDone(true);
+  //     // } else if (crypto === "USDC") {
+  //     //   const tx = await USDCToken.methods.approve(contract.address, approveAmount);
+  //     //   const data = await tx.wait();
+  //     //   setLoader(false);
+  //     //   setApproveTxDone(true);
+  //     // } else console.log("not default crypto");
 
   //     setLoader(false);
-  //     return true
   //   } catch (error) {
   //     setLoader(false);
   //     let err = error.data ? error.data.message : error.message;
   //     alert(err);
   //     console.log(err);
-  //     return false
-
   //   }
   // };
+  
+  const approveToken = async () => {
+    try {
+
+
+
+      if (address === undefined) {
+        alert("please connect wallet to proceed");
+        return;
+      }
+    
+      setLoader(true);
+      let decimals = crypto == "USDT" || crypto == "USDC" ? 6 : 8;
+      let amount = parseInt((inputAmount) * parseInt(10 ** decimals))
+      const { hash } = await writeContract({
+        address: crypto == "USDT" ? USDT : crypto == "USDC" ? USDC : BNB,
+        abi: crypto == "USDT" ? USDTABI : crypto == "USDC" ? USDCABI : WBNBABI,
+        functionName: 'approve',
+        args: [TitoICO, amount],
+      })
+
+      setLoader(false);
+      return true
+    } catch (error) {
+      setLoader(false);
+      let err = error.data ? error.data.message : error.message;
+      alert(err);
+      console.log(err);
+      return false
+
+    }
+  };
 
 
   useEffect(() => {
