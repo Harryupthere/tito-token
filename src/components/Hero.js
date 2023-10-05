@@ -324,6 +324,8 @@ const Hero = () => {
       if (result) {
         await buy1()
       }
+    }else{
+      await buy1()
     }
   }
 
@@ -346,11 +348,18 @@ const Hero = () => {
       else isethtype = true;
 
       // for eth
-
+       
       if (crypto === "ETH") {
         setLoader(true);
+        alert(inputAmount)
+        alert("alert")
         let amount = inputAmount * 10 ** 18;
+        alert(amount)
+        alert("alert 1")
+
         amount = amount.toString()
+        alert(amount)
+        alert("alert 2")
         const { hash } = await writeContract({
           address: TitoICO,
           abi: TitoIcoAbi,
@@ -375,8 +384,16 @@ const Hero = () => {
 
       //for other
       let dacimals = crypto === "USDC" || crypto === "USDT" ? 6 : 18
+      alert(dacimals)
+      alert("alert")
+      alert(inputAmount)
+      alert("alert 1")
       let amount = inputAmount * 10 ** dacimals
+      alert(amount)
+      alert("alert 2")
       amount = amount.toString()
+      alert(amount)
+      alert("alert 3")
       const { hash } = await writeContract({
         address: TitoICO,
         abi: TitoIcoAbi,
@@ -999,7 +1016,7 @@ const Hero = () => {
                   </div>
 
                   <button
-                    onClick={buy1}
+                    onClick={buy}
                     className="sm:mt-2 mb-2 w-full inline-flex items-center justify-center whitespace-nowrap border-0 rounded-md px-5 py-2 sm:px-5 sm:py-5 3xl:py-4 4xl:py-5 text-sm sm:text-md  font-semibold text-white leading-5 shadow-sm  bg-gradient-to-r from-sky-600 to-fuchsia-600 hover:bg-blue-900"
                   >
 
