@@ -375,9 +375,9 @@ const Hero = () => {
           address: TitoICO,
           abi: TitoIcoAbi,
           functionName: 'buy',
-          args: [amount, CryptoAddress,
+          args: [amount.toString(), CryptoAddress,
             promocode.toUpperCase() === "DOUG" ? true : false],
-          value: amount,
+          value: amount.toString(),
         })
 
         if (hash) {
