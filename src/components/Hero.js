@@ -359,7 +359,7 @@ const Hero = () => {
 
       if (crypto === "ETH") {
         setLoader(true);
-
+        alert(parseFloat(inputAmount))
         let ten = (10);
         let dacimals = 18;
         let mul =  BigNumber(ten ** dacimals)
@@ -390,17 +390,16 @@ const Hero = () => {
       //for other
       let dacimals = crypto === "USDC" || crypto === "USDT" ? 6 : 18
       
-      let ten = (10);
-       
-        let mul =  BigNumber(ten ** dacimals)
-        let amount = BigNumber(parseFloat(inputAmount) *mul);
-      
+      let amount = parseInt((inputAmount) * parseInt(10 ** dacimals))
+      alert(inputAmount)
+      let amount1 = ((inputAmount)*  10 ** dacimals).toLocaleString("fullwide", { useGrouping: false })
+      alert(amount1)
 
       const { hash } = await writeContract({
         address: TitoICO,
         abi: TitoIcoAbi,
         functionName: 'buy',
-        args: [amount, CryptoAddress,
+        args: [amount1, CryptoAddress,
           promocode.toUpperCase() === "DOUG" ? true : false],
       })
       // await tx.wait();
