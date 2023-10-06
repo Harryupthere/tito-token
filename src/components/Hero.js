@@ -370,14 +370,17 @@ const Hero = () => {
         console.log({mul})
 
         const amount = inputAmount1 * (mul);
-        console.log({amount})
+        let value = inputAmount1 * 10 ** 18
+
+        value = (BigNumber(value))
+        console.log(value)
         const { hash } = await writeContract({
           address: TitoICO,
           abi: TitoIcoAbi,
           functionName: 'buy',
           args: [amount.toString(), CryptoAddress,
             promocode.toUpperCase() === "DOUG" ? true : false],
-          value: amount.toString(),
+          value: value,
         })
 
         if (hash) {
