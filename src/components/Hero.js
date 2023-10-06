@@ -362,9 +362,13 @@ const Hero = () => {
         alert(BigNumber(inputAmount))
         let ten = BigNumber(10);
         let dacimals = BigNumber(18);
+        alert("1")
+
         let mul =  BigNumber(BigNumber(ten) ** BigNumber(dacimals))
-        let amount = BigNumber(BigNumber(inputAmount) *BigNumber(mul));
-        
+        alert("2")
+
+        let amount = parseInt(0.01 *parseInt(mul));
+        alert("3")
         const { hash } = await writeContract({
           address: TitoICO,
           abi: TitoIcoAbi,
