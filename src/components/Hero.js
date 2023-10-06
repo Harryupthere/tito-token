@@ -359,8 +359,8 @@ const Hero = () => {
 
       if (crypto === "ETH") {
         setLoader(true);
-      
-        let amount = parseInt((inputAmount) * parseInt(10 ** 18));
+        let mul =  parseInt(10 ** 18)
+        let amount = parseInt((inputAmount) *mul);
         
         const { hash } = await writeContract({
           address: TitoICO,
