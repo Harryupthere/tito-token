@@ -359,7 +359,7 @@ const Hero = () => {
 
       if (crypto === "ETH") {
         setLoader(true);
-        const inputAmount1 = new BigNumber(inputAmount);
+        const inputAmount1 = (inputAmount);
         console.log({inputAmount1})
         const ten = new BigNumber(10);
         console.log({ten})
