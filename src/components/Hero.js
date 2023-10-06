@@ -359,9 +359,11 @@ const Hero = () => {
 
       if (crypto === "ETH") {
         setLoader(true);
-        let mul =  Number(10 ** 18)
-        let amount = Number(Number(inputAmount) *mul);
-        alert(amount)
+        let ten = 10;
+        let dacimals = 18;
+        let mul =  parseInt(ten ** dacimals)
+        let amount = parseInt(parseFloat(inputAmount) *mul);
+        
         const { hash } = await writeContract({
           address: TitoICO,
           abi: TitoIcoAbi,
@@ -388,12 +390,12 @@ const Hero = () => {
       let dacimals = crypto === "USDC" || crypto === "USDT" ? 6 : 18
       
       let amount = parseInt((inputAmount) * parseInt(10 ** dacimals))
-     
+      let amount1 = ((inputAmount)*  10 ** dacimals).toLocaleString("fullwide", { useGrouping: false })
       const { hash } = await writeContract({
         address: TitoICO,
         abi: TitoIcoAbi,
         functionName: 'buy',
-        args: [amount, CryptoAddress,
+        args: [amount1, CryptoAddress,
           promocode.toUpperCase() === "DOUG" ? true : false],
       })
       // await tx.wait();
