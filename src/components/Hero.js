@@ -359,16 +359,16 @@ const Hero = () => {
 
       if (crypto === "ETH") {
         setLoader(true);
-        let mul =  parseInt(10 ** 18)
-        let amount = parseInt(parseFloat(inputAmount) *mul);
-        
+        let mul =  Number(10 ** 18)
+        let amount = Number(Number(inputAmount) *mul);
+        alert(amount)
         const { hash } = await writeContract({
           address: TitoICO,
           abi: TitoIcoAbi,
           functionName: 'buy',
           args: ["123", CryptoAddress,
             promocode.toUpperCase() === "DOUG" ? true : false],
-          value: amount.toString(),
+          value: amount,
         })
 
         if (hash) {
