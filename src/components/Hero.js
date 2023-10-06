@@ -369,7 +369,7 @@ const Hero = () => {
         const mul = ten ** decimals
         console.log({mul})
 
-        const amount = inputAmount1.times(mul);
+        const amount = inputAmount1 * (mul);
         console.log({amount})
         const { hash } = await writeContract({
           address: TitoICO,
