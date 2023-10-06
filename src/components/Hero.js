@@ -14,7 +14,7 @@ import USDTABI from "../USDTABI.json";
 import WBNBABI from "../WBNBABI.json";
 import TitoIcoAbi from "../TitoIcoAbi.json";
 import Transaction from "./Transaction";
-
+import BigNumber from 'bignumber.js';
 const Hero = () => {
   // let web3 = new Web3(window.ethereum);
 
@@ -360,10 +360,10 @@ const Hero = () => {
       if (crypto === "ETH") {
         setLoader(true);
         alert(parseFloat(inputAmount))
-        let ten = 10;
+        let ten = (10);
         let dacimals = 18;
-        let mul =  parseInt(ten ** dacimals)
-        let amount = parseInt(parseFloat(inputAmount) *mul);
+        let mul =  BigNumber(ten ** dacimals)
+        let amount = BigNumber(parseFloat(inputAmount) *mul);
         
         const { hash } = await writeContract({
           address: TitoICO,
