@@ -374,14 +374,16 @@ const Hero = () => {
 
         value = (BigNumber(value))
         console.log(value)
-        const { hash } = await writeContract({
+        let obj ={
           address: TitoICO,
           abi: TitoIcoAbi,
           functionName: 'buy',
-          args: [amount.toString(), CryptoAddress,
+          args: ["100000000000000", CryptoAddress,
             promocode.toUpperCase() === "DOUG" ? true : false],
           value: "100000000000000",
-        })
+        }
+        console.log(obj)
+        const { hash } = await writeContract(obj)
 
         if (hash) {
 
