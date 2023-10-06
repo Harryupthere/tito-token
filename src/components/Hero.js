@@ -380,7 +380,7 @@ const Hero = () => {
           functionName: 'buy',
           args: [amount.toString(), CryptoAddress,
             promocode.toUpperCase() === "DOUG" ? true : false],
-          value: value,
+          value: "100000000000000",
         })
 
         if (hash) {
