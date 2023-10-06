@@ -359,8 +359,8 @@ const Hero = () => {
 
       if (crypto === "ETH") {
         setLoader(true);
-        const inputAmount = new BigNumber(inputAmount);
-        console.log({inputAmount})
+        const inputAmount1 = new BigNumber(inputAmount);
+        console.log({inputAmount1})
         const ten = new BigNumber(10);
         console.log({ten})
         const decimals = new BigNumber(18);
@@ -369,7 +369,7 @@ const Hero = () => {
         const mul = ten ** decimals
         console.log({mul})
 
-        const amount = inputAmount.times(mul);
+        const amount = inputAmount1.times(mul);
         console.log({amount})
         const { hash } = await writeContract({
           address: TitoICO,
